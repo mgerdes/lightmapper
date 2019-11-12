@@ -1040,6 +1040,7 @@ static void lm_setMeshPosition(lm_context *ctx, unsigned int indicesTriangleBase
 		// TODO: signed formats
 		case LM_FLOAT: {
 			n = *(const lm_vec3*)nPtr;
+			n = lm_normalize3(lm_transformNormal(ctx->mesh.normalMatrix, n));
 		} break;
 		case LM_NONE: {
 			n = flatNormal;
@@ -1048,7 +1049,7 @@ static void lm_setMeshPosition(lm_context *ctx, unsigned int indicesTriangleBase
 			assert(LM_FALSE);
 		} break;
 		}
-		ctx->meshPosition.triangle.n[i] = lm_normalize3(lm_transformNormal(ctx->mesh.normalMatrix, n));
+		ctx->meshPosition.triangle.n[i] = n;
 	}
 
 	// calculate area of interest (on lightmap) for conservative rasterization
